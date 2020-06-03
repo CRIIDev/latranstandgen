@@ -1,152 +1,235 @@
-import React, {Component} from 'react';
-import { Layout, Card} from 'antd';
-import './App.css';
-import Button from 'react-bootstrap/Button';
+import React, {useState} from 'react';
+import { Button, FormGroup, Label, Row, Col} from 'reactstrap';
+import Select from 'react-select';
+import CreatableSelect from 'react-select/creatable';
+import makeAnimated from 'react-select/animated';
+import Countdown, { zeroPad} from 'react-countdown';
 
-const { Header, Content } = Layout;
+let devTeam = ['Eitan', 'Reggie', 'Karthik', 'James', 'Josh', 'Nam'];
+let compDev=[];
+let currentDev=[];
+let show="none";
+let autoStart = false;
+let count = 0;
+let countdownApi = null;
+let timeSelect = 15;
+let end = devTeam.length-1;
+const time =[
+    { value: 5, label: '5 min'},
+    { value: 10, label: '10 min'},
+    { value: 15, label: '15 min'},
+    { value: 20, label: '20 min'},
+    { value: 25, label: '25 min'},
+    { value: 30, label: '30 min'},
+    { value: 35, label: '35 min'},
+    { value: 40, label: '40 min'},
+    { value: 45, label: '45 min'},
+    { value: 50, label: '50 min'},
+    { value: 55, label: '55 min'},
+    { value: 60, label: '60 min'}];
 
-var todayDate = new Date();
+const animatedComponents = makeAnimated();
 
-class App extends Component {
+const devOps =[
+    { value: 'Eitan', label: 'Eitan'},
+    { value: 'Karthik', label: 'Karthik'},
+    { value: 'James', label: 'James'},
+    { value: 'Reggie', label: 'Reggie'},
+    { value: 'Josh', label: 'Josh'},
+    { value: 'Nam', label: 'Nam'}];
 
-  constructor(props) {
-    super(props);
+const useForceUpdate = () => useState([0]);
 
-    this.handleClick = this.handleClick.bind(this);
-    this.state = { one: "", two: "", three: "", four: "", five: "", six: "",  };
-  }
+const App = (props) => {
 
-       handleClick(){
-
-        var names = ["Eitan","Karthik", "James", "Josh", "Reggie","Nom"];
-
-         names.sort(func);
-
-           function func(a, b) {
-               return 0.5 - Math.random();
-           }
-
-            this.setState({ one : names[0]});
-            this.setState({ two: names[1] });
-            this.setState({ three: names[2] });
-            this.setState({ four: names[3] });
-            this.setState({ five: names[4] });
-            this.setState({ six: names[5] });
-    }
-
-  render()
-  {
-
-      window.onload = function () {
-
-          let eleBtnStart = document.querySelector("#btnStart");
-          let eleBtnStop = document.querySelector("#btnStop");
-          let eleBtnReset = document.querySelector("#btnReset");
-          let eleTimer = document.querySelector("#divTimer");
-
-          let timeTicker = (() => {
-              var hours = 0;
-              var minutes = 0;
-              var seconds = 0;
-              var timerTick;
-              return {
-                  start: () => {
-                      if (!timerTick) {
-                          timerTick = setInterval(() => {
-                              seconds++;
-                              if (seconds == 60) {
-                                  minutes += 1;
-                                  seconds = 0;
-                                  if (minutes == 60) {
-                                      hours += 1;
-                                      minutes = 0;
-                                  }
-                              }
-                              eleTimer.innerHTML = `${hours.toString().length == 1 ? "0" + hours : hours}
-: ${minutes.toString().length == 1 ? "0" + minutes : minutes}
-: ${seconds.toString().length == 1 ? "0" + seconds : seconds}`;
-                          }, 25);
-                      }
-                  },
-                  stop: () => {
-                      if (timerTick) {
-                          clearInterval(timerTick);
-                          timerTick = false;
-                      }
-                  },
-                  reset: () => {
-                      seconds = minutes = hours = 0;
-                      clearInterval(timerTick);
-                      timerTick = false;
-                      eleTimer.innerHTML = `0${hours} : 0${minutes} : 0${seconds}`;
-                  }
-              }
-          })();
+    const [nameState, setNameState] = useState([]);
+    const [nowState, setNowState] = useState([]);
+    //const [timeSelectState, setTimeSelectState] = ([]);
+    const [timerState, setTimerState] = useState(Date.now() + ((timeSelect*60000)/devTeam.length) );
 
 
-          eleBtnStart.addEventListener('click', () => {
-              timeTicker.start();
-          });
+    const forceUpdate = () => useForceUpdate;
 
-          eleBtnStop.addEventListener('click', () => {
-              timeTicker.stop();
-          })
+    const setRef = (countdown) => {
+        if (countdown) {
+            countdownApi =[];
+            countdownApi = countdown.getApi();
+        }
+    };
 
-          eleBtnReset.addEventListener('click', () => {
-              timeTicker.reset();
-          })
+    const renderer = ({ hours, minutes, seconds, completed }) => {
 
-      }
+        if (completed && count > end){
+            // Render a completed state
+            console.log(count+" > "+end);
+            handleUpdate();
+            return <h1 style={{color:"limegreen", fontSize:"7rem"}}> DONE =) </h1>
+        } else {
+            // Render a countdown
+            // setNowState(<h1 style={{color: "red"}}>You're Up: {compDev2[now]}</h1>);
+            return <h1 style={{color:"blue", fontSize:"7rem", display:show}}> {/*<p style={{display:secZero(hours)}}>0</p>{hours}:*/}{zeroPad(minutes)}:{zeroPad(seconds)}</h1>;
+        }
+    };
 
+    const shuffle = (array) => {
+        for (let i = array.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i
 
+            // swap elements array[i] and array[j]
+            // we use "destructuring assignment" syntax to achieve that
+            // you'll find more details about that syntax in later chapters
+            // same can be written as:
+            // let t = array[i]; array[i] = array[j]; array[j] = t
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    };
+    const handleUpdate = () => {
+        forceUpdate();
+    };
 
-      return(
+    const generate= () =>{
+        shuffle(devTeam);
+        compDev = [];
+        currentDev = [];
+        count=0;
+        show="";
+        autoStart=false;
+        for (let i = 0; i < devTeam.length; i++){
+            compDev.push(<h2>{devTeam[i]}</h2>);
+            currentDev.push("You're up " + devTeam[i]+"!");
+        }
+        setNameState(compDev);
 
-        <Layout className="App">
+        setNowState(currentDev[count]);
 
-          <Header className="App-header">
-            <p className="header-class">Random StandUp Generator!</p>
-          </Header>
+        setTimerState(Date.now() + ((timeSelect*60000)/devTeam.length));
+    };
 
-          <Content className="App-content">
-            <Card>
-              <p style={{fontSize: "x-large"}}>Today's Date: {todayDate.toDateString()} {todayDate.toLocaleTimeString()}</p>
+    const start = () => {
+        countdownApi.start();
+    };
+    const stop = () => {
+        countdownApi.pause();
+    };
+    const reset = () => {
+        autoStart=true;
+        setTimerState(Date.now() + ((timeSelect*60000)/devTeam.length));
+    };
+    const next = () => {
 
-                <p><div className={'text-color'} id="divTimer">00 : 00 : 00</div></p>
+        if (!devTeam[count]  && count > devTeam.length-6){
+            setNowState([]);
+            setTimerState([]);
+        }else{
+            count++;
+            setNowState(currentDev[count]);
+            reset();
+        }
+    };
 
-                <Button variant="success" id="btnStart">Start</Button>
-                &nbsp;
-                <Button variant="danger" id="btnStop">Stop</Button>
-                &nbsp;
-                <Button variant="warning" id="btnReset">Reset</Button>
+    const prev = () => {
 
-                <br></br>
-                <br></br>
+        if (count < 1){
+            return;
+        }else{
+            count--;
+            setNowState(currentDev[count]);
+            reset();
+        }
+    };
 
-            <Card>
-                <h3>{this.state.one}</h3>
-                <h3>{this.state.two}</h3>
-                <h3>{this.state.three}</h3>
-                <h3>{this.state.four}</h3>
-                <h3>{this.state.five}</h3>
-                <h3>{this.state.six}</h3>
-            </Card>
+    const timeSelectHandler = (opts) => {
 
-            </Card>
+        timeSelect = parseInt(JSON.stringify(opts.value));
+        console.log(timeSelect);
+    };
 
-              <br></br>
-              <br></br>
+    const peopleHandler = (opts) =>{
+        devTeam = [];
 
-              <Button variant="primary" onClick={this.handleClick.bind(this)}>Generate</Button>
+        opts.forEach((option) =>{
+            devTeam.push(option.value);
+        });
+    };
 
-          </Content>
+    return (
+        <div style={{textAlign: "center", backgroundColor: "#f0f2f5", minHeight: "50rem"}}>
+            <header className="App-header">
+                <h1 style={{backgroundColor: "gold"}}>
+                    Stand Up Generator
+                </h1>
+            </header>
 
-          <br></br>
-          <br></br>
+            <div className="tab-content mx-auto col-sm-12 col-lg-10 tab-pane active" style={{ textAlign: "center" }} id="cardDiv">
+                <div>
+                    <div className="d-flex justify-content-center mt-3" > </div>
+                    <div className="card mb mt-2" id="cardDiv" style={{ display: "inline-block", maxWidth: "83.333333%", width: "100%" }}>
+                        <div className="card-body" style={{border: "0px "}}>
+                            <Col sm="12">
+                                <Row form>
+                                    <Col md={4}>
+                                        <FormGroup>
+                                            <Label>Participants</Label>
+                                            <CreatableSelect
+                                                isMulti
+                                                closeMenuOnSelect={false}
+                                                components={animatedComponents}
+                                                onChange={peopleHandler}
+                                                options={devOps}
+                                                defaultValue ={[devOps[0], devOps[1], devOps[2], devOps[3], devOps[4], devOps[5]]}
+                                            />
+                                        </FormGroup>
+                                    </Col>
+                                    <Col md={4}>
+                                        <FormGroup>
+                                        </FormGroup>
+                                    </Col>
 
-        </Layout>
+                                    <Col md={4}>
+                                        <FormGroup>
+                                            <Label>Select Time</Label>
+                                            <Select
+                                                closeMenuOnSelect={true}
+                                                placeholder={"15 min"}
+                                                options = {time}
+                                                defaultValue={{value: 15, label: '15 min'}}
+                                                onChange={timeSelectHandler}
+                                            />
+                                        </FormGroup>
+                                    </Col>
+                                </Row>
+
+                                <Button style={{backgroundColor: "#32CD32"}} onClick={generate}>Generate</Button>
+
+                                <h1 style={{color: "red", display:show, fontSize: "5rem", marginTop: "1rem"}}>{nowState}</h1>
+
+                                <Button style={{backgroundColor: "#3386FF", display:show }} onClick={prev}>Prev</Button>
+                                <Button style={{backgroundColor: "#3386FF", display:show, marginLeft: "1rem" }} onClick={next}>Next</Button>
+
+                                <h1>
+                                    <Countdown
+                                        key={timerState}
+                                        date={timerState}
+                                        ref={setRef}
+                                        renderer={renderer}
+                                        onMount={handleUpdate}
+                                        onStart={handleUpdate}
+                                        onPause={handleUpdate}
+                                        onComplete={next}
+                                        autoStart={autoStart}
+                                    />
+                                </h1>
+                                <Button style={{backgroundColor: "green", display:show }} onClick={start}>Start</Button>
+                                <Button style={{backgroundColor: "red", display:show, marginLeft: "1rem" }} onClick={stop}>Stop</Button>
+                                <Button style={{backgroundColor: "gold", color:"black", display:show, marginLeft: "1rem" }} onClick={reset}>Reset</Button>
+                                <h4 style={{marginTop: "2rem" }}>{nameState}</h4>
+                            </Col>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
-  }
-}
+};
 
 export default App;
