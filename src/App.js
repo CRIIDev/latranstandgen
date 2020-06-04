@@ -44,7 +44,6 @@ const App = (props) => {
 
     const [nameState, setNameState] = useState([]);
     const [nowState, setNowState] = useState([]);
-    //const [timeSelectState, setTimeSelectState] = ([]);
     const [timerState, setTimerState] = useState(Date.now() + ((timeSelect*60000)/devTeam.length) );
 
 
@@ -61,13 +60,11 @@ const App = (props) => {
 
         if (completed && count > end){
             // Render a completed state
-            console.log(count+" > "+end);
             handleUpdate();
             return <h1 style={{color:"limegreen", fontSize:"7rem"}}> DONE =) </h1>
         } else {
             // Render a countdown
-            // setNowState(<h1 style={{color: "red"}}>You're Up: {compDev2[now]}</h1>);
-            return <h1 style={{color:"blue", fontSize:"7rem", display:show}}> {/*<p style={{display:secZero(hours)}}>0</p>{hours}:*/}{zeroPad(minutes)}:{zeroPad(seconds)}</h1>;
+            return <h1 style={{color:"blue", fontSize:"7rem", display:show}}>{zeroPad(minutes)}:{zeroPad(seconds)}</h1>;
         }
     };
 
@@ -77,8 +74,6 @@ const App = (props) => {
 
             // swap elements array[i] and array[j]
             // we use "destructuring assignment" syntax to achieve that
-            // you'll find more details about that syntax in later chapters
-            // same can be written as:
             // let t = array[i]; array[i] = array[j]; array[j] = t
             [array[i], array[j]] = [array[j], array[i]];
         }
@@ -117,7 +112,7 @@ const App = (props) => {
     };
     const next = () => {
 
-        if (!devTeam[count]  && count > devTeam.length-6){
+        if (!devTeam[count]  && count > devTeam.length-2){
             setNowState([]);
             setTimerState([]);
         }else{

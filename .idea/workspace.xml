@@ -4,6 +4,7 @@
     <list default="true" id="c4545917-e1e4-4e1d-a7f7-a8d12d4c314d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,7 +81,7 @@
       <workItem from="1586137878426" duration="2694000" />
       <workItem from="1591204099924" duration="1211000" />
       <workItem from="1591273711472" duration="350000" />
-      <workItem from="1591274137222" duration="2036000" />
+      <workItem from="1591274137222" duration="3633000" />
     </task>
     <servers />
   </component>
@@ -96,5 +97,9 @@
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="392" y="158" key="Vcs.Push.Dialog.v2/0.0.1600.860@0.0.1600.860" timestamp="1591205402716" />
+    <state x="402" y="237" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1591277969985">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="402" y="237" key="git4idea.remote.GitConfigureRemotesDialog/0.0.1280.680@0.0.1280.680" timestamp="1591277969985" />
   </component>
 </project>
