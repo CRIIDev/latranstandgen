@@ -1,6 +1,6 @@
 {
-  "homepage": "https://criidev.github.io/randstandupgenerator",
-  "name": "randstandupgenerator",
+  "homepage": "https://namakujuo.github.io/stand_up_generator",
+  "name": "stand_up_generator",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
