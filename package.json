@@ -1,6 +1,6 @@
 {
-  "homepage": "https://namakujuo.github.io/stand_up_generator",
-  "name": "randstandupgenerator",
+  "homepage": "http://criidev.github.io/latranstandgen",
+  "name": "latranstandgen",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
