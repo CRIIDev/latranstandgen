@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/latranstandgen/static/css/main.69eda509.chunk.css",
+    "main.js": "/latranstandgen/static/js/main.162453a2.chunk.js",
+    "main.js.map": "/latranstandgen/static/js/main.162453a2.chunk.js.map",
+    "runtime-main.js": "/latranstandgen/static/js/runtime-main.5f3383e9.js",
+    "runtime-main.js.map": "/latranstandgen/static/js/runtime-main.5f3383e9.js.map",
+    "static/js/2.a2b2f0b8.chunk.js": "/latranstandgen/static/js/2.a2b2f0b8.chunk.js",
+    "static/js/2.a2b2f0b8.chunk.js.map": "/latranstandgen/static/js/2.a2b2f0b8.chunk.js.map",
+    "index.html": "/latranstandgen/index.html",
+    "precache-manifest.c16ab7b6e61bb7b3dcf904237fdd0953.js": "/latranstandgen/precache-manifest.c16ab7b6e61bb7b3dcf904237fdd0953.js",
+    "service-worker.js": "/latranstandgen/service-worker.js",
+    "static/css/main.69eda509.chunk.css.map": "/latranstandgen/static/css/main.69eda509.chunk.css.map",
+    "static/js/2.a2b2f0b8.chunk.js.LICENSE.txt": "/latranstandgen/static/js/2.a2b2f0b8.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.5f3383e9.js",
+    "static/js/2.a2b2f0b8.chunk.js",
+    "static/css/main.69eda509.chunk.css",
+    "static/js/main.162453a2.chunk.js"
+  ]
+}
